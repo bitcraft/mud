@@ -1,4 +1,4 @@
-#!/usr/bin/env python 
+#!/usr/bin/env python
 '''
 ansi.py
 
@@ -23,7 +23,7 @@ Commands:
   def clrtoeol(): 'Clears screen to end of line'
 '''
 
-################################
+# ###############################
 # C O L O R  C O N S T A N T S #
 ################################
 BLACK = '\033[30m'
@@ -55,40 +55,49 @@ WHITEBG = '\033[47m'
 
 
 def move(new_x, new_y):
-  'Move cursor to new_x, new_y'
-  return '\033[' + str(new_x) + ';' + str(new_y) + 'H'
+    'Move cursor to new_x, new_y'
+    return '\033[' + str(new_x) + ';' + str(new_y) + 'H'
+
 
 def moveUp(lines):
-  'Move cursor up # of lines'
-  return '\033[' + str(lines) + 'A'
+    'Move cursor up # of lines'
+    return '\033[' + str(lines) + 'A'
+
 
 def moveDown(lines):
-  'Move cursor down # of lines'
-  return '\033[' + str(lines) + 'B'
+    'Move cursor down # of lines'
+    return '\033[' + str(lines) + 'B'
+
 
 def moveForward(chars):
-  'Move cursor forward # of chars'
-  return '\033[' + str(lines) + 'C'
+    'Move cursor forward # of chars'
+    return '\033[' + str(lines) + 'C'
+
 
 def moveBack(chars):
-  'Move cursor backward # of chars'
-  return '\033[' + str(lines) + 'D'
+    'Move cursor backward # of chars'
+    return '\033[' + str(lines) + 'D'
+
 
 def save():
-  'Saves cursor position'
-  return '\033[s'
+    'Saves cursor position'
+    return '\033[s'
+
 
 def restore():
-  'Restores cursor position'
-  return '\033[u'
+    'Restores cursor position'
+    return '\033[u'
+
 
 def clear():
-  'Clears screen and homes cursor'
-  return '\033[2J'
+    'Clears screen and homes cursor'
+    return '\033[2J'
+
 
 def clrtoeol():
-  'Clears screen to end of line'
-  return '\033[K'
+    'Clears screen to end of line'
+    return '\033[K'
+
 
 def reset():
     """

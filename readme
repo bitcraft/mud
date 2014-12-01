@@ -1,7 +1,7 @@
 basic goals:
 
 using twisted
-not coding anything network realted
+not coding anything network related
 not coding a silly main loop
 works
 no difference between players and mobs (share the same code)
@@ -26,8 +26,8 @@ it will....basically render the queing system i had to be useless, unless, i use
 it in another grand idea i have, which is a game that has state.
 
 every time a mudatom instance changes state, it will tell our eventhandler.
-the event handler will process the variabel changes as quickly as it can,
-but if it recives a request while it is busy changing from another state, then
+the event handler will process the variable changes as quickly as it can,
+but if it receives a request while it is busy changing from another state, then
 the request will be que'd.  then, if the machine has a long list of changes for
 that state, it will:
 just pick one, and nul the rest
