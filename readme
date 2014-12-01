@@ -1,0 +1,93 @@
+basic goals:
+
+using twisted
+not coding anything network realted
+not coding a silly main loop
+works
+no difference between players and mobs (share the same code)
+leave room for real things like guilds, clans, etc
+killing stuff
+
+S T I C K Y
+================================================================================
+3/21/09:
+the publish subsribe thing is taking roots.
+if i want it to work nicely, i will have to make all attributes "observer"
+clients, and also the mud objects themselves.  this is quickly turning into a
+huge mind-fuck, as a try to lay distinctions between objects.
+
+anyway, i'm thinking that to make things simpler, each object can have a set
+list of variables that other clients can subcribe to.  this will make working
+with their interfaces a bit easier.  also, special purpose variables can be used
+to trigger events, like if a character takes damage, or when a actor enters a
+room.
+
+it will....basically render the queing system i had to be useless, unless, i use
+it in another grand idea i have, which is a game that has state.
+
+every time a mudatom instance changes state, it will tell our eventhandler.
+the event handler will process the variabel changes as quickly as it can,
+but if it recives a request while it is busy changing from another state, then
+the request will be que'd.  then, if the machine has a long list of changes for
+that state, it will:
+just pick one, and nul the rest
+somehow null out one that will change the same vaiables, and process the rest
+
+this would make the game stateful, and make it possible to pickle the entire
+game at any given instant.  sounds cool, huh?
+
+3/8/09:
+a new idea has come to me to simplify object interaction, and that has been
+to remove the eventmanager class i hae in place, and set things up using
+the publisher-subscribe design pattern and a base class for listeners.  this,
+obviously, will make things trickier if i want to keep make the game world
+persistant and have automatic snapshots, but.  this will make interaction more
+simple.
+
+9/29/08:
+if it makes a change, it goes in the que.  if it only reading information,
+then it can be called directly from the object.
+
+	* a property: if it is bool, the variable prefix is "is"
+	* should a say be an emote when said in a room, and a tell if to a person?
+
+there is a inconsistency in naming of methods!
+	* methods beginning with "check" should NOT change anything, and return T/F
+	* methods ending with "Command" should return a Command object
+
+bugs: all the actions that a thing can do need to have checking if the actions
+they want to carry out actually happen or not.  so, every action should return
+a true or false, then it is up to the thing to emote the response.  OK.
+only things and inventories should return true/false, not derived classes
+
+* evt_look might should be on_look.  chdkcin implimentation details.
+* so i guess, the telnet protocol is really complicated, simple, but WHY????
+	- I will just impliment it as a *simple* way to send data...
+
+
+"""#	this all works to capture method calls, but is buggy...
+
+	def on_emote(self):
+		print "emote"
+
+	def __getattribute__(self,name):
+		try:
+			value=object.__getattribute__(self,name)
+		except:
+			#print "cannot access method/attribute: ",name
+			return None
+
+		if type(value)==MethodType:
+			if name!='__methodcall__':
+				self.__methodcall__(name)
+				#print "%s attr: %s" % (name, type(value))
+		return value
+
+	def __methodcall__(self,name):
+		try:
+			func=getattr(self,'on_'+name)
+		except:
+			return None
+		if type(func)!=NoneType:
+			func()
+"""

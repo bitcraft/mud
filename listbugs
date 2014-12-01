@@ -1,0 +1,3 @@
+#!/bin/sh
+grep "bug:" *py --color -n -T
+grep "bug:" *py -c|grep ":0" -v
